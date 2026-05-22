@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLEA · Foot Loisir Entre Amis</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gold-light:#E8C97A;--gold-bg:rgba(201,168,76,0.12);
+  --navy:#0D1B2A;--navy2:#162032;--navy3:#1E2D40;
+  --green:#2ECC71;--red:#E74C3C;--orange:#F39C12;--blue:#3498db;--purple:#9b59b6;
+  --bg:#F5F5F0;--bg-card:#FFFFFF;--bg-sec:#F0EFE9;
+  --border:rgba(0,0,0,0.08);--border-mid:rgba(0,0,0,0.13);
+  --text:#1A1A1A;--text2:#666660;--text3:#AAAAAA;
+  --r:12px;--rsm:8px;
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#0F1923;--bg-card:#1A2535;--bg-sec:#151F2E;--border:rgba(255,255,255,0.08);--border-mid:rgba(255,255,255,0.13);--text:#F0EFE9;--text2:#8A8A84;--text3:#555550;}
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);-webkit-tap-highlight-color:transparent;}
+.app{max-width:430px;margin:0 auto;min-height:100vh;background:var(--bg);}
+
+/* TOPBAR */
+.topbar{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,0.3);}
+.logo-badge{width:38px;height:38px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:var(--navy);}
+.topbar-logo{display:flex;align-items:center;gap:10px;}
+.t1{color:#fff;font-size:15px;font-weight:600;}
+.t2{color:var(--gold);font-size:11px;}
+.topbar-actions{display:flex;gap:6px;align-items:center;}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;}
+.admin-pill{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;}
+
+/* NAV */
+.nav-tabs{display:flex;background:var(--bg-card);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+.nav-tabs::-webkit-scrollbar{display:none;}
+.nav-tab{flex:0 0 auto;padding:11px 14px;font-size:12px;font-weight:500;color:var(--text2);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:5px;font-family:'Outfit',sans-serif;transition:color .2s,border-color .2s;}
+.nav-tab i{font-size:15px;}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* LAYOUT */
+.content{padding-bottom:90px;}
+.section{display:none;}
+.section.active{display:block;}
+.sh{padding:18px 16px 10px;display:flex;align-items:flex-start;justify-content:space-between;}
+.sh .ttl{font-size:22px;font-weight:600;}
+.sh .sub{font-size:12px;color:var(--text2);margin-top:2px;}
+.slbl{padding:14px 16px 6px;font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;font-weight:600;}
+
+/* CARDS */
+.card{background:var(--bg-card);border-radius:var(--r);border:1px solid var(--border);padding:14px 16px;margin:0 16px 10px;}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.clbl{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:6px;}
+.clbl i{font-size:15px;color:var(--gold);}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 16px;}
+.mc{background:var(--bg-sec);border-radius:var(--rsm);padding:14px;}
+.mc .lbl{font-size:11px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.mc .val{font-size:26px;font-weight:600;line-height:1.1;}
+.mc .sub{font-size:11px;color:var(--text2);margin-top:3px;}
+.mc .trend{font-size:11px;margin-top:2px;}
+.up{color:var(--green);}.dn{color:var(--red);}
+
+/* BUTTONS */
+.btn{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid var(--border-mid);background:var(--bg-sec);color:var(--text2);cursor:pointer;font-family:'Outfit',sans-serif;display:inline-flex;align-items:center;gap:5px;transition:all .2s;}
+.btn-gold{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:600;}
+.btn-gold:hover{background:var(--gold-light);}
+.btn-sm{padding:4px 10px;font-size:11px;}
+
+/* AVATAR */
+.av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;}
+.av-lg{width:44px;height:44px;font-size:14px;}
+.av-gold{background:rgba(201,168,76,0.15);color:var(--gold);}
+.av-blue{background:rgba(52,152,219,0.15);color:var(--blue);}
+.av-green{background:rgba(46,204,113,0.15);color:var(--green);}
+.av-red{background:rgba(231,76,60,0.15);color:var(--red);}
+.av-purple{background:rgba(155,89,182,0.15);color:var(--purple);}
+.av-orange{background:rgba(243,156,18,0.15);color:var(--orange);}
+
+/* CHIPS */
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;}
+.c-green{background:rgba(46,204,113,0.12);color:var(--green);}
+.c-red{background:rgba(231,76,60,0.12);color:var(--red);}
+.c-gold{background:rgba(201,168,76,0.12);color:var(--gold);}
+.c-blue{background:rgba(52,152,219,0.12);color:var(--blue);}
+.c-gray{background:var(--bg-sec);color:var(--text2);}
+.c-orange{background:rgba(243,156,18,0.12);color:var(--orange);}
+
+/* BADGES JOUEUR */
+.badge-ok{background:rgba(46,204,113,0.1);color:var(--green);border:1px solid rgba(46,204,113,0.25);font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;display:inline-flex;align-items:center;gap:3px;}
+.badge-ko{background:rgba(231,76,60,0.1);color:var(--red);border:1px solid rgba(231,76,60,0.25);font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;display:inline-flex;align-items:center;gap:3px;}
+.badge-warn{background:rgba(243,156,18,0.1);color:var(--orange);border:1px solid rgba(243,156,18,0.25);font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;display:inline-flex;align-items:center;gap:3px;}
+.func-tag{font-size:10px;padding:2px 8px;border-radius:10px;background:var(--gold-bg);color:var(--gold);border:1px solid rgba(201,168,76,0.25);display:inline-block;font-weight:500;}
+
+/* RANK */
+.rank-item{display:flex;align-items:center;gap:10px;padding:9px 0;}
+.rn{font-size:13px;font-weight:600;width:18px;color:var(--text3);flex-shrink:0;}
+.rn.g{color:var(--gold);}
+.ri{flex:1;min-width:0;}
+.rname{font-size:13px;font-weight:500;}
+.rdetail{font-size:11px;color:var(--text2);}
+.rval{font-size:20px;font-weight:600;color:var(--gold);flex-shrink:0;}
+.rbar{height:3px;background:var(--bg-sec);border-radius:2px;margin-top:5px;}
+.rbar-fill{height:100%;border-radius:2px;background:var(--gold);}
+.row-sep{border-bottom:1px solid var(--border);}
+.row-sep:last-child{border-bottom:none;}
+
+/* NEXT MATCH */
+.nm-card{margin:0 16px 10px;background:linear-gradient(135deg,var(--navy),var(--navy3));border-radius:var(--r);border:1px solid rgba(201,168,76,0.25);padding:16px;color:#fff;}
+.nm-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,0.18);border:1px solid rgba(201,168,76,0.35);color:var(--gold);font-size:11px;padding:4px 12px;border-radius:20px;margin-bottom:12px;font-weight:500;}
+.nm-teams{display:flex;align-items:center;gap:10px;}
+.nm-team{flex:1;text-align:center;}
+.nm-tname{font-size:15px;font-weight:600;}
+.nm-tsub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;}
+.nm-vs{font-size:18px;font-weight:600;color:var(--gold);}
+.nm-footer{display:flex;justify-content:space-around;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.1);}
+.nm-fi{text-align:center;}
+.nm-fv{font-size:14px;font-weight:600;}
+.nm-fl{font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;}
+
+/* CALENDRIER */
+.mini-cal{margin:0 16px 10px;background:var(--bg-card);border-radius:var(--r);border:1px solid var(--border);padding:14px;}
+.cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.cal-title{font-size:15px;font-weight:600;}
+.cal-nav{width:30px;height:30px;border-radius:50%;border:1px solid var(--border-mid);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:16px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-dname{text-align:center;font-size:10px;color:var(--text3);font-weight:600;padding:4px 0;}
+.cal-d{text-align:center;font-size:12px;padding:7px 2px;border-radius:6px;cursor:pointer;transition:all .15s;position:relative;user-select:none;}
+.cal-d:hover{background:var(--bg-sec);}
+.cal-d.today{background:var(--gold);color:var(--navy);font-weight:700;}
+.cal-d.has-ev::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--blue);}
+.cal-d.today.has-ev::after{background:var(--navy);}
+.cal-d.other{color:var(--text3);}
+.cal-d.match-d{background:rgba(52,152,219,0.1);}
+.filter-row{display:flex;gap:6px;padding:0 16px;margin-bottom:8px;overflow-x:auto;scrollbar-width:none;}
+.filter-row::-webkit-scrollbar{display:none;}
+.fbtn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid var(--border-mid);background:transparent;color:var(--text2);cursor:pointer;white-space:nowrap;font-family:'Outfit',sans-serif;transition:all .2s;}
+.fbtn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:600;}
+
+/* EVENTS */
+.ev-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin:0 16px 8px;display:flex;gap:14px;cursor:pointer;transition:border-color .2s;}
+.ev-card:hover{border-color:var(--gold);}
+.ev-date{flex-shrink:0;width:44px;text-align:center;}
+.ev-day{font-size:24px;font-weight:600;line-height:1;}
+.ev-month{font-size:11px;color:var(--text2);text-transform:uppercase;}
+.ev-sep{width:1px;background:var(--border);flex-shrink:0;}
+.ev-info{flex:1;min-width:0;}
+.ev-type{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;}
+.t-match{color:var(--blue);}.t-event{color:var(--purple);}.t-tournoi{color:var(--gold);}.t-ag{color:var(--green);}
+.ev-title{font-size:14px;font-weight:600;}
+.ev-meta{font-size:11px;color:var(--text2);margin-top:4px;display:flex;gap:10px;flex-wrap:wrap;}
+.ev-meta span{display:flex;align-items:center;gap:3px;}
+.sc-badge{padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600;}
+.sv{background:rgba(46,204,113,0.12);color:var(--green);}
+.sd{background:rgba(231,76,60,0.12);color:var(--red);}
+.sn{background:rgba(243,156,18,0.12);color:var(--orange);}
+
+/* JOUEURS */
+.player-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px;}
+.player-info{flex:1;min-width:0;}
+.player-name{font-size:14px;font-weight:600;}
+.player-role{font-size:11px;color:var(--text2);margin-top:1px;}
+.player-badges{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+.edit-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--border-mid);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:14px;flex-shrink:0;transition:all .2s;}
+.edit-btn:hover{border-color:var(--gold);color:var(--gold);}
+.admin-only{display:none !important;}
+.is-admin .admin-only{display:flex !important;}
+.is-admin .admin-only-inline{display:inline-flex !important;}
+.admin-only-inline{display:none !important;}
+
+/* STATS */
+.stat-tabs{display:flex;gap:6px;padding:0 16px;margin:8px 0 14px;}
+.stat-tab{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid var(--border-mid);background:transparent;color:var(--text2);cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s;}
+.stat-tab.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:600;}
+.trophy-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 16px 10px;}
+.trophy-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:16px 12px;text-align:center;}
+.trophy-icon{font-size:30px;margin-bottom:6px;}
+.trophy-title{font-size:10px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.trophy-winner{font-size:13px;font-weight:600;margin-top:5px;}
+.trophy-sub{font-size:11px;color:var(--gold);margin-top:2px;}
+
+/* TACHES */
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;}
+.task-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--border-mid);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-top:1px;transition:all .2s;}
+.task-check.done{background:var(--green);border-color:var(--green);color:#fff;}
+.urg{font-size:10px;padding:2px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0;font-weight:500;}
+.uh{background:rgba(231,76,60,0.12);color:var(--red);}
+.um{background:rgba(243,156,18,0.12);color:var(--orange);}
+.ul{background:rgba(46,204,113,0.12);color:var(--green);}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--bg-card);border-top:1px solid var(--border);display:flex;z-index:200;padding-bottom:env(safe-area-inset-bottom);}
+.bnav-item{flex:1;padding:8px 4px 10px;border:none;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--text3);transition:color .2s;font-family:'Outfit',sans-serif;}
+.bnav-item.active{color:var(--gold);}
+.bnav-item i{font-size:21px;}
+.bnav-label{font-size:10px;font-weight:500;}
+
+/* MODAL */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:500;align-items:flex-end;justify-content:center;}
+.mo.open{display:flex;}
+.modal{background:var(--bg-card);border-radius:20px 20px 0 0;width:100%;max-width:430px;padding:20px 20px 40px;max-height:90vh;overflow-y:auto;}
+.modal-handle{width:40px;height:4px;background:var(--border-mid);border-radius:2px;margin:0 auto 20px;}
+.modal-title{font-size:18px;font-weight:600;margin-bottom:16px;}
+.fg{margin-bottom:14px;}
+.fl{font-size:12px;color:var(--text2);font-weight:500;margin-bottom:5px;display:block;}
+.fi{width:100%;padding:10px 14px;border-radius:var(--rsm);border:1px solid var(--border-mid);background:var(--bg-sec);color:var(--text);font-size:14px;font-family:'Outfit',sans-serif;}
+.fi:focus{outline:none;border-color:var(--gold);}
+.frow{display:flex;gap:10px;}
+.frow .fg{flex:1;}
+
+/* LOGIN */
+.login-screen{position:fixed;inset:0;background:linear-gradient(135deg,var(--navy),var(--navy3));display:flex;align-items:center;justify-content:center;z-index:1000;flex-direction:column;gap:20px;padding:30px;}
+.login-logo{width:80px;height:80px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:var(--navy);}
+.login-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r);padding:24px;width:100%;max-width:340px;}
+.login-input{width:100%;padding:12px 16px;border-radius:var(--rsm);border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff;font-size:15px;font-family:'Outfit',sans-serif;margin-bottom:12px;}
+.login-input:focus{outline:none;border-color:var(--gold);}
+.login-input::placeholder{color:rgba(255,255,255,0.3);}
+.login-btn{width:100%;padding:13px;border-radius:var(--rsm);background:var(--gold);color:var(--navy);font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:'Outfit',sans-serif;}
+.login-err{color:var(--red);font-size:12px;text-align:center;margin-top:8px;min-height:18px;}
+.login-skip{color:rgba(255,255,255,0.4);font-size:12px;text-align:center;cursor:pointer;margin-top:8px;text-decoration:underline;}
+
+/* PROG */
+.prog-wrap{height:5px;background:var(--bg-sec);border-radius:3px;overflow:hidden;margin-top:6px;}
+.prog-fill{height:100%;border-radius:3px;background:var(--gold);}
+
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;z-index:600;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:40px 20px;color:var(--text2);}
+.empty i{font-size:40px;margin-bottom:10px;opacity:.3;display:block;}
+.empty p{font-size:14px;}
+
+/* PRES ROW */
+.pres-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;}
+.pres-row .name{font-size:13px;display:flex;align-items:center;gap:8px;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-logo">FL</div>
+  <div style="color:#fff;font-size:22px;font-weight:600">FLEA</div>
+  <div style="color:rgba(255,255,255,0.5);font-size:13px">Foot Loisir Entre Amis · Montélimar</div>
+  <div class="login-card">
+    <div style="color:rgba(255,255,255,0.7);font-size:13px;margin-bottom:16px;text-align:center">Connexion Admin pour modifier les données</div>
+    <input class="login-input" type="password" id="pwdInput" placeholder="Mot de passe admin" onkeydown="if(event.key==='Enter')tryLogin()">
+    <button class="login-btn" onclick="tryLogin()">Se connecter</button>
+    <div class="login-err" id="loginErr"></div>
+    <div class="login-skip" onclick="enterAsViewer()">Continuer sans connexion (lecture seule)</div>
+  </div>
+</div>
+
+<div class="app" id="mainApp" style="display:none">
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-logo">
+    <div class="logo-badge">FL</div>
+    <div><div class="t1">FLEA</div><div class="t2">Foot Loisir Entre Amis</div></div>
+  </div>
+  <div class="topbar-actions">
+    <span class="admin-pill admin-only">ADMIN</span>
+    <button class="icon-btn" onclick="toggleAdminModal()" title="Admin">
+      <i class="ti ti-lock" id="lockIcon"></i>
+    </button>
+  </div>
+</header>
+
+<!-- NAV TABS -->
+<nav class="nav-tabs" role="tablist">
+  <button class="nav-tab active" onclick="showSection('home',this)"><i class="ti ti-home"></i> Accueil</button>
+  <button class="nav-tab" onclick="showSection('calendar',this)"><i class="ti ti-calendar"></i> Agenda</button>
+  <button class="nav-tab" onclick="showSection('players',this)"><i class="ti ti-users"></i> Joueurs</button>
+  <button class="nav-tab" onclick="showSection('stats',this)"><i class="ti ti-chart-bar"></i> Stats</button>
+  <button class="nav-tab" onclick="showSection('budget',this)"><i class="ti ti-wallet"></i> Budget</button>
+  <button class="nav-tab" onclick="showSection('tasks',this)"><i class="ti ti-checks"></i> Tâches</button>
+</nav>
+
+<main class="content">
+
+<!-- ===== ACCUEIL ===== -->
+<section id="sec-home" class="section active">
+  <div class="sh">
+    <div><div class="ttl">Tableau de bord</div><div class="sub" id="home-saison">Saison 2025-2026</div></div>
+    <button class="btn admin-only" onclick="openModal('modal-stats')"><i class="ti ti-edit"></i> Stats</button>
+  </div>
+
+  <div class="g2">
+    <div class="mc">
+      <div class="lbl">Victoires</div>
+      <div class="val" id="h-v">0</div>
+      <div class="sub">sur <span id="h-mj">0</span> matchs</div>
+      <div class="trend" id="h-pct-wrap" style="color:var(--text2)">0% réussite</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">Buts marqués</div>
+      <div class="val" id="h-bp">0</div>
+      <div class="sub"><span id="h-bc">0</span> encaissés</div>
+      <div class="trend" id="h-diff-wrap" style="color:var(--text2)">diff. 0</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">Effectif</div>
+      <div class="val">17</div>
+      <div class="sub">+ 2 occasionnels</div>
+      <div class="trend" style="color:var(--text2)">20 adhérents</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">Nuls / Défaites</div>
+      <div class="val" style="font-size:20px"><span id="h-n">0</span>N · <span id="h-d">0</span>D</div>
+      <div class="sub">Saison en cours</div>
+    </div>
+  </div>
+
+  <!-- Prochain match -->
+  <div class="nm-card" style="margin-top:10px">
+    <div class="nm-badge"><i class="ti ti-ball-football" style="font-size:11px"></i> Prochain match</div>
+    <div class="nm-teams">
+      <div class="nm-team"><div class="nm-tname">FLEA</div><div class="nm-tsub">Domicile</div></div>
+      <div class="nm-vs">VS</div>
+      <div class="nm-team"><div class="nm-tname" id="h-adv">—</div><div class="nm-tsub">Visiteur</div></div>
+    </div>
+    <div class="nm-footer">
+      <div class="nm-fi"><div class="nm-fv" id="h-date">À définir</div><div class="nm-fl">Date</div></div>
+      <div class="nm-fi"><div class="nm-fv">20h00</div><div class="nm-fl">Coup d'envoi</div></div>
+      <div class="nm-fi"><div class="nm-fv">Sauzet</div><div class="nm-fl">Stade</div></div>
+    </div>
+  </div>
+
+  <!-- Top buteurs -->
+  <div class="card">
+    <div class="card-hdr"><div class="clbl"><i class="ti ti-award"></i> Top buteurs</div><button class="btn btn-sm" onclick="showSection('stats',document.querySelector('.nav-tab:nth-child(4)'))">Voir tout →</button></div>
+    <div id="home-buteurs">
+      <div class="empty"><i class="ti ti-ball-football"></i><p>Aucun but enregistré pour l'instant</p></div>
+    </div>
+  </div>
+
+  <!-- Présences -->
+  <div class="card">
+    <div class="card-hdr"><div class="clbl"><i class="ti ti-user-check"></i> Prochain match · Présences</div></div>
+    <div id="home-presences">
+      <div class="empty"><i class="ti ti-users"></i><p>Aucune présence enregistrée</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CALENDRIER ===== -->
+<section id="sec-calendar" class="section">
+  <div class="sh">
+    <div><div class="ttl">Agenda</div><div class="sub">Saison 2025-2026</div></div>
+    <button class="btn btn-gold admin-only" onclick="openModal('modal-event')"><i class="ti ti-plus"></i> Ajouter</button>
+  </div>
+
+  <!-- Mini calendrier -->
+  <div class="mini-cal">
+    <div class="cal-hdr">
+      <button class="cal-nav" onclick="calNav(-1)"><i class="ti ti-chevron-left"></i></button>
+      <div class="cal-title" id="calTitle"></div>
+      <button class="cal-nav" onclick="calNav(1)"><i class="ti ti-chevron-right"></i></button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+
+  <div class="filter-row">
+    <button class="fbtn active" onclick="filterEvents('tous',this)">Tous</button>
+    <button class="fbtn" onclick="filterEvents('match',this)">Matchs</button>
+    <button class="fbtn" onclick="filterEvents('evenement',this)">Événements</button>
+    <button class="fbtn" onclick="filterEvents('tournoi',this)">Tournois</button>
+  </div>
+
+  <div class="slbl">À venir</div>
+  <div id="events-avenir">
+    <div class="empty" style="margin:0 16px"><i class="ti ti-calendar"></i><p>Aucun événement à venir.<br><span style="color:var(--gold)">Clique sur un jour du calendrier pour en créer un !</span></p></div>
+  </div>
+
+  <div class="slbl">Passés</div>
+  <div id="events-passes">
+    <div class="empty" style="margin:0 16px"><i class="ti ti-history"></i><p>Aucun événement passé</p></div>
+  </div>
+</section>
+
+<!-- ===== JOUEURS ===== -->
+<section id="sec-players" class="section">
+  <div class="sh">
+    <div><div class="ttl">Joueurs</div><div class="sub">17 joueurs · 2 occasionnels</div></div>
+    <button class="btn btn-gold admin-only" onclick="openModal('modal-add-player')"><i class="ti ti-plus"></i> Ajouter</button>
+  </div>
+
+  <div class="slbl">Bureau</div>
+  <div style="padding:0 16px" id="list-bureau"></div>
+
+  <div class="slbl">Joueurs</div>
+  <div style="padding:0 16px" id="list-joueurs"></div>
+
+  <div class="slbl">Occasionnels</div>
+  <div style="padding:0 16px;margin-bottom:16px" id="list-occasionnels"></div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section id="sec-stats" class="section">
+  <div class="sh">
+    <div><div class="ttl">Statistiques</div><div class="sub">Saison 2025-2026</div></div>
+    <button class="btn btn-gold admin-only" onclick="openModal('modal-stats')"><i class="ti ti-edit"></i> Modifier</button>
+  </div>
+  <div class="stat-tabs">
+    <button class="stat-tab active" onclick="switchStatTab(this,'st-b')">Buteurs</button>
+    <button class="stat-tab" onclick="switchStatTab(this,'st-a')">Assiduité</button>
+    <button class="stat-tab" onclick="switchStatTab(this,'st-e')">Équipe</button>
+    <button class="stat-tab" onclick="switchStatTab(this,'st-t')">Trophées</button>
+  </div>
+
+  <div id="st-b">
+    <div class="card">
+      <div class="card-hdr"><div class="clbl"><i class="ti ti-ball-football"></i> Classement buteurs</div></div>
+      <div id="stat-buteurs-list">
+        <div class="empty"><i class="ti ti-ball-football"></i><p>Aucun but enregistré.<br>Ajoute des stats via le bouton Modifier.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="st-a" style="display:none">
+    <div class="card">
+      <div class="card-hdr"><div class="clbl"><i class="ti ti-user-check"></i> Matchs joués</div></div>
+      <div id="stat-assiduite-list">
+        <div class="empty"><i class="ti ti-run"></i><p>Aucune donnée d'assiduité.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="st-e" style="display:none">
+    <div class="g2" style="margin-top:4px">
+      <div class="mc"><div class="lbl">Matchs joués</div><div class="val" id="eq-mj">0</div></div>
+      <div class="mc"><div class="lbl">Victoires</div><div class="val" id="eq-v">0</div><div class="trend" id="eq-pct" style="color:var(--text2)">0%</div></div>
+      <div class="mc"><div class="lbl">Buts marqués</div><div class="val" id="eq-bp">0</div></div>
+      <div class="mc"><div class="lbl">Buts encaissés</div><div class="val" id="eq-bc">0</div></div>
+    </div>
+    <div class="card" style="margin-top:10px">
+      <div class="card-hdr"><div class="clbl"><i class="ti ti-chart-pie"></i> Bilan</div></div>
+      <div class="rank-item row-sep">
+        <div style="width:10px;height:10px;border-radius:2px;background:var(--green);flex-shrink:0"></div>
+        <div class="ri"><div class="rname" style="font-size:13px">Victoires</div><div class="rbar"><div class="rbar-fill" id="eq-bar-v" style="width:0%;background:var(--green)"></div></div></div>
+        <div style="font-size:16px;font-weight:600;color:var(--green)" id="eq-v2">0</div>
+      </div>
+      <div class="rank-item row-sep">
+        <div style="width:10px;height:10px;border-radius:2px;background:var(--orange);flex-shrink:0"></div>
+        <div class="ri"><div class="rname" style="font-size:13px">Nuls</div><div class="rbar"><div class="rbar-fill" id="eq-bar-n" style="width:0%;background:var(--orange)"></div></div></div>
+        <div style="font-size:16px;font-weight:600;color:var(--orange)" id="eq-n">0</div>
+      </div>
+      <div class="rank-item">
+        <div style="width:10px;height:10px;border-radius:2px;background:var(--red);flex-shrink:0"></div>
+        <div class="ri"><div class="rname" style="font-size:13px">Défaites</div><div class="rbar"><div class="rbar-fill" id="eq-bar-d" style="width:0%;background:var(--red)"></div></div></div>
+        <div style="font-size:16px;font-weight:600;color:var(--red)" id="eq-d">0</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="st-t" style="display:none">
+    <div class="slbl">Trophées de fin de saison</div>
+    <div class="trophy-grid">
+      <div class="trophy-card"><div class="trophy-icon">⚽</div><div class="trophy-title">Meilleur buteur</div><div class="trophy-winner" id="tr-buteur">À définir</div><div class="trophy-sub" id="tr-buteur-sub">Fin de saison</div></div>
+      <div class="trophy-card"><div class="trophy-icon">🎖️</div><div class="trophy-title">Homme du match</div><div class="trophy-winner" id="tr-hdm">À définir</div><div class="trophy-sub">Fin de saison</div></div>
+      <div class="trophy-card"><div class="trophy-icon">🏃</div><div class="trophy-title">Joueur le + présent</div><div class="trophy-winner" id="tr-present">À définir</div><div class="trophy-sub">Fin de saison</div></div>
+      <div class="trophy-card"><div class="trophy-icon">🔧</div><div class="trophy-title">Roi des tâches</div><div class="trophy-winner">À calculer</div><div class="trophy-sub">Fin de saison</div></div>
+      <div class="trophy-card"><div class="trophy-icon">🤝</div><div class="trophy-title">Fair-play</div><div class="trophy-winner">Vote à venir</div><div class="trophy-sub">Fin de saison</div></div>
+      <div class="trophy-card"><div class="trophy-icon">⭐</div><div class="trophy-title">Meilleur passeur</div><div class="trophy-winner">À définir</div><div class="trophy-sub">Fin de saison</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BUDGET ===== -->
+<section id="sec-budget" class="section">
+  <div class="sh">
+    <div><div class="ttl">Trésorerie</div><div class="sub">Saison 2025-2026</div></div>
+    <button class="btn btn-gold admin-only" onclick="openModal('modal-depense')"><i class="ti ti-plus"></i> Saisir</button>
+  </div>
+  <div class="g2">
+    <div class="mc" style="border-left:3px solid var(--green)"><div class="lbl" style="color:var(--green)">Recettes</div><div class="val" style="font-size:22px">6 642€</div><div class="sub">Total saison</div></div>
+    <div class="mc" style="border-left:3px solid var(--red)"><div class="lbl" style="color:var(--red)">Dépenses</div><div class="val" style="font-size:22px">6 343€</div><div class="sub">Total saison</div></div>
+  </div>
+  <div class="g2" style="margin-top:8px">
+    <div class="mc" style="border-left:3px solid var(--gold)"><div class="lbl" style="color:var(--gold)">Solde banque</div><div class="val" style="font-size:22px">302€</div><div class="trend up">Créditeur</div></div>
+    <div class="mc" style="border-left:3px solid var(--gold)"><div class="lbl" style="color:var(--gold)">Tréso globale</div><div class="val" style="font-size:22px">307€</div><div class="sub">Banque + caisse</div></div>
+  </div>
+  <div class="card" style="margin-top:10px">
+    <div class="card-hdr"><div class="clbl"><i class="ti ti-receipt"></i> Répartition des dépenses</div></div>
+    <div class="rank-item row-sep"><div style="display:flex;align-items:center;gap:8px"><div style="width:9px;height:9px;border-radius:50%;background:var(--purple)"></div>Week-end Imbours</div><div style="text-align:right"><div style="font-size:13px;font-weight:600">2 528€</div><div style="font-size:11px;color:var(--text2)">40%</div></div></div>
+    <div class="rank-item row-sep"><div style="display:flex;align-items:center;gap:8px"><div style="width:9px;height:9px;border-radius:50%;background:var(--gold)"></div>Cotisation ASLC</div><div style="text-align:right"><div style="font-size:13px;font-weight:600">200€</div><div style="font-size:11px;color:var(--text2)">3%</div></div></div>
+    <div class="rank-item row-sep"><div style="display:flex;align-items:center;gap:8px"><div style="width:9px;height:9px;border-radius:50%;background:var(--green)"></div>Maillots / matériel</div><div style="text-align:right"><div style="font-size:13px;font-weight:600">550€</div><div style="font-size:11px;color:var(--text2)">9%</div></div></div>
+    <div class="rank-item row-sep"><div style="display:flex;align-items:center;gap:8px"><div style="width:9px;height:9px;border-radius:50%;background:var(--blue)"></div>Repas domicile</div><div style="text-align:right"><div style="font-size:13px;font-weight:600">~810€</div><div style="font-size:11px;color:var(--text2)">13%</div></div></div>
+    <div class="rank-item"><div style="display:flex;align-items:center;gap:8px"><div style="width:9px;height:9px;border-radius:50%;background:var(--red)"></div>Autres</div><div style="text-align:right"><div style="font-size:13px;font-weight:600">2 255€</div><div style="font-size:11px;color:var(--text2)">35%</div></div></div>
+  </div>
+  <div class="card"><div style="font-size:13px;line-height:1.8;color:var(--text2)">
+    <p>💰 <strong style="color:var(--text)">Cotisation standard : 200€/an</strong> dont 30€ → ASLC</p>
+    <p>📅 Paiement en 2 fois : Septembre + Janvier</p>
+    <p>🏦 Crédit Mutuel Montélimar</p>
+  </div></div>
+</section>
+
+<!-- ===== TÂCHES ===== -->
+<section id="sec-tasks" class="section">
+  <div class="sh">
+    <div><div class="ttl">Tâches</div><div class="sub">Organisation</div></div>
+    <button class="btn btn-gold admin-only" onclick="openModal('modal-tache')"><i class="ti ti-plus"></i> Ajouter</button>
+  </div>
+  <div id="tasks-list">
+    <div class="empty" style="margin:20px 16px"><i class="ti ti-checks"></i><p>Aucune tâche.<br>Ajoute-en une via le bouton +</p></div>
+  </div>
+</section>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="bnav-item active" onclick="showSection('home',this,true)"><i class="ti ti-home"></i><span class="bnav-label">Accueil</span></button>
+  <button class="bnav-item" onclick="showSection('calendar',this,true)"><i class="ti ti-calendar"></i><span class="bnav-label">Agenda</span></button>
+  <button class="bnav-item" onclick="showSection('players',this,true)"><i class="ti ti-users"></i><span class="bnav-label">Joueurs</span></button>
+  <button class="bnav-item" onclick="showSection('stats',this,true)"><i class="ti ti-chart-bar"></i><span class="bnav-label">Stats</span></button>
+  <button class="bnav-item" onclick="showSection('budget',this,true)"><i class="ti ti-wallet"></i><span class="bnav-label">Budget</span></button>
+  <button class="bnav-item" onclick="showSection('tasks',this,true)"><i class="ti ti-checks"></i><span class="bnav-label">Tâches</span></button>
+</nav>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Modal admin -->
+<div class="mo" id="modal-admin" onclick="closeModalOverlay(event,'modal-admin')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="adm-title">Connexion admin</div>
+    <div id="adm-login">
+      <div class="fg"><label class="fl">Mot de passe</label><input class="fi" type="password" id="pwd2" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')tryLogin2()"></div>
+      <button class="btn btn-gold" style="width:100%;padding:12px;justify-content:center" onclick="tryLogin2()">Se connecter</button>
+      <div class="login-err" id="loginErr2"></div>
+    </div>
+    <div id="adm-logout" style="display:none">
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Mode admin actif. Tu peux modifier toutes les données.</p>
+      <button class="btn" style="width:100%;padding:12px;justify-content:center;color:var(--red)" onclick="logout()"><i class="ti ti-logout"></i> Se déconnecter</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal événement -->
+<div class="mo" id="modal-event" onclick="closeModalOverlay(event,'modal-event')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Ajouter un événement</div>
+    <div class="fg"><label class="fl">Type</label>
+      <select class="fi" id="ev-type">
+        <option value="match">Match</option>
+        <option value="evenement">Événement / Soirée</option>
+        <option value="tournoi">Tournoi</option>
+        <option value="ag">Assemblée générale</option>
+      </select></div>
+    <div class="fg"><label class="fl">Titre</label><input class="fi" id="ev-titre" placeholder="ex: FLEA vs FC Sauzet"></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Date</label><input class="fi" id="ev-date" type="date"></div>
+      <div class="fg"><label class="fl">Heure</label><input class="fi" id="ev-heure" type="time" value="20:00"></div>
+    </div>
+    <div class="fg"><label class="fl">Lieu</label><input class="fi" id="ev-lieu" placeholder="ex: Stade de Sauzet"></div>
+    <div class="fg"><label class="fl">Description</label><textarea class="fi" id="ev-desc" rows="2" placeholder="Infos..."></textarea></div>
+    <button class="btn btn-gold" style="width:100%;padding:12px;justify-content:center;font-size:14px" onclick="addEvent()">Ajouter</button>
+  </div>
+</div>
+
+<!-- Modal stats -->
+<div class="mo" id="modal-stats" onclick="closeModalOverlay(event,'modal-stats')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Modifier les statistiques</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:14px">Stats équipe</div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Matchs joués</label><input class="fi" id="s-mj" type="number" min="0" value="0"></div>
+      <div class="fg"><label class="fl">Victoires</label><input class="fi" id="s-v" type="number" min="0" value="0"></div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Nuls</label><input class="fi" id="s-n" type="number" min="0" value="0"></div>
+      <div class="fg"><label class="fl">Défaites</label><input class="fi" id="s-d" type="number" min="0" value="0"></div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Buts marqués</label><input class="fi" id="s-bp" type="number" min="0" value="0"></div>
+      <div class="fg"><label class="fl">Buts encaissés</label><input class="fi" id="s-bc" type="number" min="0" value="0"></div>
+    </div>
+    <div style="font-size:12px;color:var(--text2);margin:14px 0 8px">Prochain match</div>
+    <div class="fg"><label class="fl">Adversaire</label><input class="fi" id="s-adv" placeholder="Nom de l'équipe adverse"></div>
+    <div class="fg"><label class="fl">Date</label><input class="fi" id="s-date" placeholder="ex: Jeu 29 Mai"></div>
+    <div style="font-size:12px;color:var(--text2);margin:14px 0 8px">Top buteurs (séparés par virgule)</div>
+    <div class="fg"><label class="fl">ex: Dauget:17,Zaza:15,Fourdraine:14</label><input class="fi" id="s-buteurs" placeholder="Nom:buts,Nom:buts..."></div>
+    <button class="btn btn-gold" style="width:100%;padding:12px;justify-content:center;font-size:14px;margin-top:8px" onclick="saveStats()">Enregistrer</button>
+  </div>
+</div>
+
+<!-- Modal dépense -->
+<div class="mo" id="modal-depense" onclick="closeModalOverlay(event,'modal-depense')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Saisir une opération</div>
+    <div class="fg"><label class="fl">Type</label><select class="fi"><option>Dépense</option><option>Recette</option><option>Don</option><option>Cotisation</option></select></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Montant (€)</label><input class="fi" type="number" placeholder="0.00"></div>
+      <div class="fg"><label class="fl">Date</label><input class="fi" type="date"></div>
+    </div>
+    <div class="fg"><label class="fl">Description</label><input class="fi" placeholder="ex: Courses match J14"></div>
+    <div class="fg"><label class="fl">Payé par</label><select class="fi"><option>Christophe Bezaud</option><option>Guillaume Allegre</option><option>Lionel Robelet</option><option>Autre</option></select></div>
+    <button class="btn btn-gold" style="width:100%;padding:12px;justify-content:center;font-size:14px" onclick="closeModal('modal-depense');showToast('Opération enregistrée ✓')">Enregistrer</button>
+  </div>
+</div>
+
+<!-- Modal tâche -->
+<div class="mo" id="modal-tache" onclick="closeModalOverlay(event,'modal-tache')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Ajouter une tâche</div>
+    <div class="fg"><label class="fl">Tâche</label><input class="fi" id="t-nom" placeholder="ex: Acheter les boissons"></div>
+    <div class="fg"><label class="fl">Assigné à</label>
+      <select class="fi" id="t-qui"><option>Non assigné</option><option>Kévin Dauget</option><option>Guillaume Allegre</option><option>Christophe Bezaud</option><option>Cyril Marcel</option><option>Lionel Robelet</option><option>Sylvain Marcel</option><option>Ludovic Clauzel</option><option>Antonio Rego</option></select></div>
+    <div class="fg"><label class="fl">Lié à</label><input class="fi" id="t-ev" placeholder="ex: Match J14 · 29 Mai"></div>
+    <div class="fg"><label class="fl">Urgence</label>
+      <select class="fi" id="t-urg"><option value="um">Normale</option><option value="uh">Urgent</option><option value="ul">Faible</option></select></div>
+    <button class="btn btn-gold" style="width:100%;padding:12px;justify-content:center;font-size:14px" onclick="addTask()">Ajouter</button>
+  </div>
+</div>
+
+<!-- Modal ajouter joueur -->
+<div class="mo" id="modal-add-player" onclick="closeModalOverlay(event,'modal-add-player')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Ajouter un joueur</div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Prénom</label><input class="fi" id="np-prenom" placeholder="Prénom"></div>
+      <div class="fg"><label class="fl">Nom</label><input class="fi" id="np-nom" placeholder="Nom"></div>
+    </div>
+    <div class="fg"><label class="fl">Poste</label><input class="fi" id="np-poste" placeholder="ex: Attaquant"></div>
+    <div class="fg"><label class="fl">Fonction</label><input class="fi" id="np-fonction" placeholder="ex: Trésorier (optionnel)"></div>
+    <div class="fg"><label class="fl">Catégorie</label>
+      <select class="fi" id="np-cat"><option value="joueurs">Joueur</option><option value="bureau">Bureau</option><option value="occasionnels">Occasionnel</option></select></div>
+    <div class="fg"><label class="fl">Licence FFF</label>
+      <select class="fi" id="np-licence"><option value="non">Non licencié</option><option value="oui">Licencié FFF</option></select></div>
+    <div class="fg"><label class="fl">Certificat médical</label>
+      <select class="fi" id="np-certif"><option value="ok">À jour</option><option value="warn">À renouveler</option><option value="ko">Manquant</option></select></div>
+    <div class="fg"><label class="fl">Couleur avatar</label>
+      <select class="fi" id="np-color"><option value="av-gold">Or</option><option value="av-blue">Bleu</option><option value="av-green">Vert</option><option value="av-red">Rouge</option><option value="av-purple">Violet</option><option value="av-orange">Orange</option></select></div>
+    <button class="btn btn-gold" style="width:100%;padding:12px;justify-content:center;font-size:14px" onclick="addPlayer()">Ajouter</button>
+  </div>
+</div>
+
+<!-- Modal éditer joueur -->
+<div class="mo" id="modal-edit-player" onclick="closeModalOverlay(event,'modal-edit-player')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Modifier le joueur</div>
+    <input type="hidden" id="ep-id">
+    <div class="frow">
+      <div class="fg"><label class="fl">Prénom</label><input class="fi" id="ep-prenom"></div>
+      <div class="fg"><label class="fl">Nom</label><input class="fi" id="ep-nom"></div>
+    </div>
+    <div class="fg"><label class="fl">Poste</label><input class="fi" id="ep-poste"></div>
+    <div class="fg"><label class="fl">Fonction</label><input class="fi" id="ep-fonction" placeholder="ex: Trésorier (optionnel)"></div>
+    <div class="fg"><label class="fl">Licence FFF</label>
+      <select class="fi" id="ep-licence"><option value="non">Non licencié</option><option value="oui">Licencié FFF</option></select></div>
+    <div class="fg"><label class="fl">Certificat médical</label>
+      <select class="fi" id="ep-certif"><option value="ok">À jour</option><option value="warn">À renouveler</option><option value="ko">Manquant</option></select></div>
+    <div class="fg"><label class="fl">Buts cette saison</label><input class="fi" id="ep-buts" type="number" min="0" value="0"></div>
+    <div class="fg"><label class="fl">Matchs joués</label><input class="fi" id="ep-matchs" type="number" min="0" value="0"></div>
+    <div style="display:flex;gap:10px;margin-top:4px">
+      <button class="btn btn-gold" style="flex:1;padding:12px;justify-content:center;font-size:14px" onclick="savePlayer()">Enregistrer</button>
+      <button class="btn" style="padding:12px 16px;color:var(--red)" onclick="deletePlayer()"><i class="ti ti-trash"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal détail événement -->
+<div class="mo" id="modal-ev-detail" onclick="closeModalOverlay(event,'modal-ev-detail')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div id="ev-detail-content"></div>
+    <button class="btn" style="width:100%;padding:10px;justify-content:center;margin-top:8px;color:var(--red)" id="ev-delete-btn" onclick="deleteEvent()">
+      <i class="ti ti-trash"></i> Supprimer cet événement
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+</div>
+
+<script>
+// ===== CONFIG =====
+var ADMIN_PWD = 'flea2025'; // MODIFIER ICI pour changer le mot de passe
+var isAdmin = false;
+var currentEventId = null;
+
+// ===== DONNÉES =====
+var stats = {mj:0,v:0,n:0,d:0,bp:0,bc:0,adv:'',date:'',buteurs:[]};
+var events = [];
+var players = [
+  // Bureau
+  {id:'p1',cat:'bureau',prenom:'Lionel',nom:'Robelet',poste:'Défenseur',fonction:'Président',licence:'oui',certif:'ok',buts:0,matchs:0,color:'av-green'},
+  {id:'p2',cat:'bureau',prenom:'Guillaume',nom:'Allegre',poste:'Gardien',fonction:'Vice-Président',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-blue'},
+  {id:'p3',cat:'bureau',prenom:'Christophe',nom:'Bezaud',poste:'Défenseur',fonction:'Trésorier',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-purple'},
+  {id:'p4',cat:'bureau',prenom:'Thomas',nom:'Dubrulle',poste:'Arrière latéral',fonction:'Trésorier adjoint',licence:'non',certif:'warn',buts:0,matchs:0,color:'av-orange'},
+  {id:'p5',cat:'bureau',prenom:'Cyril',nom:'Marcel',poste:'Défenseur central',fonction:'Secrétaire',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-green'},
+  {id:'p6',cat:'bureau',prenom:'Antonio',nom:'Rego',poste:'Défenseur central',fonction:'Secrétaire adjoint',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-blue'},
+  // Joueurs
+  {id:'p7',cat:'joueurs',prenom:'Kévin',nom:'Dauget',poste:'Attaquant',fonction:'',licence:'oui',certif:'ok',buts:0,matchs:0,color:'av-gold'},
+  {id:'p8',cat:'joueurs',prenom:"Mym's",nom:'Fourdraine',poste:'Milieu défensif',fonction:'',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-blue'},
+  {id:'p9',cat:'joueurs',prenom:'David',nom:'Zaza',poste:'—',fonction:'',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-red'},
+  {id:'p10',cat:'joueurs',prenom:'Florian',nom:'Mazoyer',poste:'—',fonction:'',licence:'non',certif:'warn',buts:0,matchs:0,color:'av-purple'},
+  {id:'p11',cat:'joueurs',prenom:'Yann',nom:'Chaouche',poste:'—',fonction:'',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-gold'},
+  {id:'p12',cat:'joueurs',prenom:'Christophe',nom:'Malingrey',poste:'Avant-centre',fonction:'Président d\'honneur',licence:'oui',certif:'ok',buts:0,matchs:0,color:'av-blue'},
+  {id:'p13',cat:'joueurs',prenom:'Tarik',nom:'Laghzizal',poste:'—',fonction:'',licence:'non',certif:'warn',buts:0,matchs:0,color:'av-red'},
+  {id:'p14',cat:'joueurs',prenom:'Romain',nom:'Barratier',poste:'—',fonction:'',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-purple'},
+  {id:'p15',cat:'joueurs',prenom:'Adrien',nom:'Bouscarle',poste:'—',fonction:'',licence:'non',certif:'warn',buts:0,matchs:0,color:'av-blue'},
+  {id:'p16',cat:'joueurs',prenom:'Luca',nom:'Tolfo',poste:'—',fonction:'',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-gold'},
+  {id:'p17',cat:'joueurs',prenom:'Ludovic',nom:'Clauzel',poste:'—',fonction:'',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-green'},
+  {id:'p18',cat:'joueurs',prenom:'Jérémy',nom:'Fourdraine',poste:'Milieu défensif',fonction:'',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-red'},
+  // Occasionnels
+  {id:'p19',cat:'occasionnels',prenom:'David',nom:'Thery',poste:'Attaquant',fonction:'',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-purple'},
+  {id:'p20',cat:'occasionnels',prenom:'Sylvain',nom:'Marcel',poste:'Milieu défensif',fonction:'',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-orange'},
+  {id:'p21',cat:'occasionnels',prenom:'David',nom:'Cholvy',poste:'—',fonction:'Président d\'honneur · Coach',licence:'non',certif:'ok',buts:0,matchs:0,color:'av-blue'},
+];
+var tasks = [];
+var evIdCounter = 1;
+var calDate = new Date();
+
+// ===== LOGIN =====
+function tryLogin() {
+  var pwd = document.getElementById('pwdInput').value;
+  if (pwd === ADMIN_PWD) {
+    enterAsAdmin();
+  } else if (pwd === '') {
+    enterAsViewer();
+  } else {
+    document.getElementById('loginErr').textContent = 'Mot de passe incorrect';
+  }
+}
+function tryLogin2() {
+  var pwd = document.getElementById('pwd2').value;
+  if (pwd === ADMIN_PWD) {
+    isAdmin = true;
+    document.body.classList.add('is-admin');
+    document.getElementById('lockIcon').className = 'ti ti-lock-open';
+    document.getElementById('adm-login').style.display = 'none';
+    document.getElementById('adm-logout').style.display = 'block';
+    document.getElementById('adm-title').textContent = 'Mode admin actif ✓';
+    renderPlayers();
+    showToast('Mode admin activé ✓');
+  } else {
+    document.getElementById('loginErr2').textContent = 'Mot de passe incorrect';
+  }
+}
+function enterAsAdmin() {
+  isAdmin = true;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  document.body.classList.add('is-admin');
+  document.getElementById('lockIcon').className = 'ti ti-lock-open';
+  init();
+}
+function enterAsViewer() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  init();
+}
+function logout() {
+  isAdmin = false;
+  document.body.classList.remove('is-admin');
+  document.getElementById('lockIcon').className = 'ti ti-lock';
+  document.getElementById('adm-login').style.display = 'block';
+  document.getElementById('adm-logout').style.display = 'none';
+  document.getElementById('adm-title').textContent = 'Connexion admin';
+  document.getElementById('pwd2').value = '';
+  closeModal('modal-admin');
+  renderPlayers();
+  showToast('Déconnecté');
+}
+function toggleAdminModal() {
+  if (isAdmin) {
+    document.getElementById('adm-login').style.display = 'none';
+    document.getElementById('adm-logout').style.display = 'block';
+    document.getElementById('adm-title').textContent = 'Mode admin actif ✓';
+  } else {
+    document.getElementById('adm-login').style.display = 'block';
+    document.getElementById('adm-logout').style.display = 'none';
+    document.getElementById('adm-title').textContent = 'Connexion admin';
+  }
+  openModal('modal-admin');
+}
+
+// ===== INIT =====
+function init() {
+  renderPlayers();
+  renderCalendar();
+  updateHomeStats();
+}
+
+// ===== NAVIGATION =====
+function showSection(name, triggerEl, isBottom) {
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  var sec = document.getElementById('sec-'+name);
+  if (sec) sec.classList.add('active');
+  var tabs = ['home','calendar','players','stats','budget','tasks'];
+  document.querySelectorAll('.nav-tab').forEach(function(t,i){t.classList.toggle('active',tabs[i]===name);});
+  document.querySelectorAll('.bnav-item').forEach(function(b,i){b.classList.toggle('active',tabs[i]===name);});
+}
+
+// ===== STAT TABS =====
+function switchStatTab(el, id) {
+  document.querySelectorAll('.stat-tab').forEach(function(t){t.classList.remove('active');});
+  el.classList.add('active');
+  ['st-b','st-a','st-e','st-t'].forEach(function(sid){
+    var e = document.getElementById(sid);
+    if (e) e.style.display = sid===id ? 'block' : 'none';
+  });
+}
+
+// ===== STATS =====
+function saveStats() {
+  stats.mj = parseInt(document.getElementById('s-mj').value)||0;
+  stats.v = parseInt(document.getElementById('s-v').value)||0;
+  stats.n = parseInt(document.getElementById('s-n').value)||0;
+  stats.d = parseInt(document.getElementById('s-d').value)||0;
+  stats.bp = parseInt(document.getElementById('s-bp').value)||0;
+  stats.bc = parseInt(document.getElementById('s-bc').value)||0;
+  stats.adv = document.getElementById('s-adv').value;
+  stats.date = document.getElementById('s-date').value;
+  var buteursRaw = document.getElementById('s-buteurs').value;
+  stats.buteurs = [];
+  if (buteursRaw.trim()) {
+    buteursRaw.split(',').forEach(function(b){
+      var parts = b.trim().split(':');
+      if (parts.length===2) stats.buteurs.push({nom:parts[0].trim(),buts:parseInt(parts[1])||0});
+    });
+    stats.buteurs.sort(function(a,b){return b.buts-a.buts;});
+  }
+  updateHomeStats();
+  updateStatsPage();
+  closeModal('modal-stats');
+  showToast('Stats mises à jour ✓');
+}
+
+function updateHomeStats() {
+  var pct = stats.mj>0 ? Math.round(stats.v/stats.mj*100) : 0;
+  var diff = stats.bp - stats.bc;
+  document.getElementById('h-v').textContent = stats.v;
+  document.getElementById('h-mj').textContent = stats.mj;
+  document.getElementById('h-pct-wrap').textContent = pct+'% réussite';
+  document.getElementById('h-pct-wrap').className = 'trend '+(pct>=50?'up':'dn');
+  document.getElementById('h-bp').textContent = stats.bp;
+  document.getElementById('h-bc').textContent = stats.bc;
+  document.getElementById('h-diff-wrap').textContent = 'diff. '+(diff>=0?'+':'')+diff;
+  document.getElementById('h-diff-wrap').className = 'trend '+(diff>=0?'up':'dn');
+  document.getElementById('h-n').textContent = stats.n;
+  document.getElementById('h-d').textContent = stats.d;
+  document.getElementById('h-adv').textContent = stats.adv||'—';
+  document.getElementById('h-date').textContent = stats.date||'À définir';
+
+  // Top buteurs accueil
+  var hb = document.getElementById('home-buteurs');
+  if (stats.buteurs.length===0) {
+    hb.innerHTML = '<div class="empty"><i class="ti ti-ball-football"></i><p>Aucun but enregistré pour l\'instant</p></div>';
+  } else {
+    var max = stats.buteurs[0].buts||1;
+    var colors = ['av-gold','av-red','av-blue','av-green','av-purple'];
+    hb.innerHTML = stats.buteurs.slice(0,5).map(function(b,i){
+      var initiales = b.nom.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();
+      return '<div class="rank-item '+(i<stats.buteurs.length-1?'row-sep':'')+'">'+
+        '<div class="rn '+(i<2?'g':'')+'">'+( i+1)+'</div>'+
+        '<div class="av '+colors[i%colors.length]+'">'+initiales+'</div>'+
+        '<div class="ri"><div class="rname">'+b.nom+'</div><div class="rbar"><div class="rbar-fill" style="width:'+Math.round(b.buts/max*100)+'%"></div></div></div>'+
+        '<div class="rval">'+b.buts+'</div></div>';
+    }).join('');
+  }
+}
+
+function updateStatsPage() {
+  var mj=stats.mj, v=stats.v, n=stats.n, d=stats.d, bp=stats.bp, bc=stats.bc;
+  var pct = mj>0?Math.round(v/mj*100):0;
+  document.getElementById('eq-mj').textContent=mj;
+  document.getElementById('eq-v').textContent=v;
+  document.getElementById('eq-pct').textContent=pct+'% réussite';
+  document.getElementById('eq-pct').className='trend '+(pct>=50?'up':'dn');
+  document.getElementById('eq-bp').textContent=bp;
+  document.getElementById('eq-bc').textContent=bc;
+  document.getElementById('eq-v2').textContent=v;
+  document.getElementById('eq-n').textContent=n;
+  document.getElementById('eq-d').textContent=d;
+  if(mj>0){
+    document.getElementById('eq-bar-v').style.width=Math.round(v/mj*100)+'%';
+    document.getElementById('eq-bar-n').style.width=Math.round(n/mj*100)+'%';
+    document.getElementById('eq-bar-d').style.width=Math.round(d/mj*100)+'%';
+  }
+  // Buteurs
+  var bl = document.getElementById('stat-buteurs-list');
+  if (stats.buteurs.length===0) {
+    bl.innerHTML='<div class="empty"><i class="ti ti-ball-football"></i><p>Aucun but enregistré.</p></div>';
+  } else {
+    var max=stats.buteurs[0].buts||1;
+    var colors=['av-gold','av-red','av-blue','av-green','av-purple','av-orange'];
+    bl.innerHTML=stats.buteurs.map(function(b,i){
+      var initiales=b.nom.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();
+      return '<div class="rank-item '+(i<stats.buteurs.length-1?'row-sep':'')+'">'+
+        '<div class="rn '+(i<2?'g':'')+'">'+( i+1)+'</div>'+
+        '<div class="av '+colors[i%colors.length]+'">'+initiales+'</div>'+
+        '<div class="ri"><div class="rname">'+b.nom+'</div><div class="rbar"><div class="rbar-fill" style="width:'+Math.round(b.buts/max*100)+'%"></div></div></div>'+
+        '<div class="rval">'+b.buts+'</div></div>';
+    }).join('');
+  }
+  // Trophées
+  if(stats.buteurs.length>0){
+    document.getElementById('tr-buteur').textContent=stats.buteurs[0].nom;
+    document.getElementById('tr-buteur-sub').textContent=stats.buteurs[0].buts+' buts';
+  }
+  // Assiduité depuis les joueurs
+  var joueursSorted = players.filter(function(p){return p.matchs>0;}).sort(function(a,b){return b.matchs-a.matchs;});
+  var al = document.getElementById('stat-assiduite-list');
+  if (joueursSorted.length===0) {
+    al.innerHTML='<div class="empty"><i class="ti ti-run"></i><p>Aucune donnée d\'assiduité.</p></div>';
+  } else {
+    var maxm = joueursSorted[0].matchs||1;
+    al.innerHTML=joueursSorted.map(function(p,i){
+      var initiales=(p.prenom[0]+(p.nom[0]||'')).toUpperCase();
+      return '<div class="rank-item '+(i<joueursSorted.length-1?'row-sep':'')+'">'+
+        '<div class="rn '+(i<2?'g':'')+'">'+( i+1)+'</div>'+
+        '<div class="av '+p.color+'">'+initiales+'</div>'+
+        '<div class="ri"><div class="rname">'+p.prenom+' '+p.nom+'</div><div class="rbar"><div class="rbar-fill" style="width:'+Math.round(p.matchs/maxm*100)+'%"></div></div></div>'+
+        '<div class="rval">'+p.matchs+'</div></div>';
+    }).join('');
+  }
+  if(joueursSorted.length>0) document.getElementById('tr-present').textContent=joueursSorted[0].prenom+' '+joueursSorted[0].nom;
+}
+
+// ===== JOUEURS =====
+function renderPlayers() {
+  ['bureau','joueurs','occasionnels'].forEach(function(cat){
+    var el = document.getElementById('list-'+cat);
+    var list = players.filter(function(p){return p.cat===cat;});
+    if (list.length===0) {el.innerHTML='<div class="empty"><i class="ti ti-user"></i><p>Aucun joueur</p></div>';return;}
+    el.innerHTML = list.map(function(p){
+      var initiales = (p.prenom[0]+(p.nom[0]||'')).toUpperCase();
+      var licBadge = p.licence==='oui'
+        ? '<span class="badge-ok"><i class="ti ti-id-badge" style="font-size:10px"></i> Licence FFF</span>'
+        : '<span class="badge-ko"><i class="ti ti-id-badge" style="font-size:10px"></i> Pas licencié</span>';
+      var certBadge = p.certif==='ok'
+        ? '<span class="badge-ok"><i class="ti ti-heart-rate-monitor" style="font-size:10px"></i> Certif. OK</span>'
+        : p.certif==='warn'
+        ? '<span class="badge-warn"><i class="ti ti-heart-rate-monitor" style="font-size:10px"></i> Certif. à renouveler</span>'
+        : '<span class="badge-ko"><i class="ti ti-heart-rate-monitor" style="font-size:10px"></i> Certif. manquant</span>';
+      var editBtn = isAdmin
+        ? '<button class="edit-btn" onclick="openEditPlayer(\''+p.id+'\')" title="Modifier"><i class="ti ti-pencil"></i></button>'
+        : '';
+      return '<div class="player-card">'+
+        '<div class="av av-lg '+p.color+'">'+initiales+'</div>'+
+        '<div class="player-info">'+
+          '<div class="player-name">'+p.prenom+' '+p.nom+'</div>'+
+          '<div class="player-role">'+p.poste+'</div>'+
+          (p.fonction?'<div style="margin-top:3px"><span class="func-tag">'+p.fonction+'</span></div>':'')+
+          '<div class="player-badges">'+licBadge+certBadge+'</div>'+
+        '</div>'+
+        editBtn+
+        '</div>';
+    }).join('');
+  });
+}
+
+function openEditPlayer(id) {
+  var p = players.find(function(x){return x.id===id;});
+  if (!p) return;
+  document.getElementById('ep-id').value = id;
+  document.getElementById('ep-prenom').value = p.prenom;
+  document.getElementById('ep-nom').value = p.nom;
+  document.getElementById('ep-poste').value = p.poste;
+  document.getElementById('ep-fonction').value = p.fonction||'';
+  document.getElementById('ep-licence').value = p.licence;
+  document.getElementById('ep-certif').value = p.certif;
+  document.getElementById('ep-buts').value = p.buts||0;
+  document.getElementById('ep-matchs').value = p.matchs||0;
+  openModal('modal-edit-player');
+}
+
+function savePlayer() {
+  var id = document.getElementById('ep-id').value;
+  var p = players.find(function(x){return x.id===id;});
+  if (!p) return;
+  p.prenom = document.getElementById('ep-prenom').value.trim()||p.prenom;
+  p.nom = document.getElementById('ep-nom').value.trim()||p.nom;
+  p.poste = document.getElementById('ep-poste').value.trim()||'—';
+  p.fonction = document.getElementById('ep-fonction').value.trim();
+  p.licence = document.getElementById('ep-licence').value;
+  p.certif = document.getElementById('ep-certif').value;
+  p.buts = parseInt(document.getElementById('ep-buts').value)||0;
+  p.matchs = parseInt(document.getElementById('ep-matchs').value)||0;
+  closeModal('modal-edit-player');
+  renderPlayers();
+  updateStatsPage();
+  showToast(p.prenom+' '+p.nom+' mis à jour ✓');
+}
+
+function deletePlayer() {
+  var id = document.getElementById('ep-id').value;
+  var p = players.find(function(x){return x.id===id;});
+  if (!p) return;
+  if (!confirm('Supprimer '+p.prenom+' '+p.nom+' ?')) return;
+  players = players.filter(function(x){return x.id!==id;});
+  closeModal('modal-edit-player');
+  renderPlayers();
+  showToast('Joueur supprimé');
+}
+
+function addPlayer() {
+  var prenom = document.getElementById('np-prenom').value.trim();
+  var nom = document.getElementById('np-nom').value.trim();
+  if (!prenom||!nom) {showToast('Remplis prénom et nom');return;}
+  var newP = {
+    id:'p'+Date.now(),
+    cat:document.getElementById('np-cat').value,
+    prenom:prenom, nom:nom,
+    poste:document.getElementById('np-poste').value||'—',
+    fonction:document.getElementById('np-fonction').value,
+    licence:document.getElementById('np-licence').value,
+    certif:document.getElementById('np-certif').value,
+    buts:0, matchs:0,
+    color:document.getElementById('np-color').value
+  };
+  players.push(newP);
+  closeModal('modal-add-player');
+  document.getElementById('np-prenom').value='';
+  document.getElementById('np-nom').value='';
+  renderPlayers();
+  showToast(prenom+' '+nom+' ajouté ✓');
+}
+
+// ===== CALENDRIER =====
+function calNav(dir) {
+  calDate.setMonth(calDate.getMonth()+dir);
+  renderCalendar();
+}
+
+function renderCalendar() {
+  var months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  var days=['L','M','M','J','V','S','D'];
+  document.getElementById('calTitle').textContent=months[calDate.getMonth()]+' '+calDate.getFullYear();
+  var grid=document.getElementById('calGrid');
+  grid.innerHTML=days.map(function(d){return '<div class="cal-dname">'+d+'</div>';}).join('');
+  var year=calDate.getFullYear(),month=calDate.getMonth();
+  var first=new Date(year,month,1);
+  var startDay=(first.getDay()+6)%7;
+  var daysInMonth=new Date(year,month+1,0).getDate();
+  var prevDays=new Date(year,month,0).getDate();
+  var today=new Date();
+  for(var i=0;i<startDay;i++){
+    grid.innerHTML+='<div class="cal-d other">'+(prevDays-startDay+1+i)+'</div>';
+  }
+  for(var d=1;d<=daysInMonth;d++){
+    var isToday=(d===today.getDate()&&month===today.getMonth()&&year===today.getFullYear());
+    var dateStr=year+'-'+(month+1<10?'0':'')+(month+1)+'-'+(d<10?'0':'')+d;
+    var hasEv=events.some(function(ev){return ev.date===dateStr;});
+    var cls='cal-d'+(isToday?' today':'')+(hasEv?' has-ev':'');
+    var dd=d;
+    grid.innerHTML+='<div class="'+cls+'" onclick="calDayClick('+year+','+(month+1)+','+dd+')">'+d+'</div>';
+  }
+  var rem=(7-((startDay+daysInMonth)%7))%7;
+  for(var i=1;i<=rem;i++){grid.innerHTML+='<div class="cal-d other">'+i+'</div>';}
+}
+
+function calDayClick(year, month, day) {
+  if (!isAdmin) { showToast('Mode admin requis pour ajouter un événement'); return; }
+  var m=month<10?'0'+month:''+month;
+  var d=day<10?'0'+day:''+day;
+  document.getElementById('ev-date').value=year+'-'+m+'-'+d;
+  document.getElementById('ev-titre').value='';
+  openModal('modal-event');
+}
+
+// ===== ÉVÉNEMENTS =====
+function addEvent() {
+  var titre=document.getElementById('ev-titre').value.trim();
+  if (!titre) {showToast('Remplis le titre');return;}
+  var type=document.getElementById('ev-type').value;
+  var date=document.getElementById('ev-date').value;
+  var heure=document.getElementById('ev-heure').value;
+  var lieu=document.getElementById('ev-lieu').value;
+  var desc=document.getElementById('ev-desc').value;
+  var ev={id:'ev'+(evIdCounter++),type:type,titre:titre,date:date,heure:heure,lieu:lieu,desc:desc};
+  events.push(ev);
+  events.sort(function(a,b){return a.date.localeCompare(b.date);});
+  closeModal('modal-event');
+  document.getElementById('ev-titre').value='';
+  document.getElementById('ev-lieu').value='';
+  document.getElementById('ev-desc').value='';
+  renderEvents();
+  renderCalendar();
+  showToast('Événement ajouté ✓');
+}
+
+function renderEvents() {
+  var today=new Date();today.setHours(0,0,0,0);
+  var avenir=events.filter(function(ev){return !ev.date||new Date(ev.date)>=today;});
+  var passes=events.filter(function(ev){return ev.date&&new Date(ev.date)<today;});
+  var months=['Jan','Fév','Mars','Avr','Mai','Juin','Juil','Août','Sept','Oct','Nov','Déc'];
+  var typeLabels={match:'t-match',evenement:'t-event',tournoi:'t-tournoi',ag:'t-ag'};
+  var typeTexts={match:'Match',evenement:'Événement',tournoi:'Tournoi',ag:'Assemblée générale'};
+
+  function renderList(list, elId, opacity) {
+    var el=document.getElementById(elId);
+    if(list.length===0){
+      el.innerHTML=elId==='events-avenir'
+        ? '<div class="empty" style="margin:0 16px"><i class="ti ti-calendar"></i><p>Aucun événement à venir.<br><span style="color:var(--gold)">Clique sur un jour du calendrier pour en créer un !</span></p></div>'
+        : '<div class="empty" style="margin:0 16px"><i class="ti ti-history"></i><p>Aucun événement passé</p></div>';
+      return;
+    }
+    el.innerHTML=list.map(function(ev){
+      var d=ev.date?new Date(ev.date):null;
+      var day=d?d.getDate():'?';
+      var month=d?months[d.getMonth()]:'';
+      return '<div class="ev-card" data-type="'+ev.type+'" style="opacity:'+(opacity||1)+'" onclick="showEvDetail(\''+ev.id+'\')">'+
+        '<div class="ev-date"><div class="ev-day">'+day+'</div><div class="ev-month">'+month+'</div></div>'+
+        '<div class="ev-sep"></div>'+
+        '<div class="ev-info">'+
+          '<div class="ev-type '+typeLabels[ev.type]+'">'+typeTexts[ev.type]+'</div>'+
+          '<div class="ev-title">'+ev.titre+'</div>'+
+          '<div class="ev-meta">'+
+            (ev.heure?'<span><i class="ti ti-clock"></i> '+ev.heure+'</span>':'')+
+            (ev.lieu?'<span><i class="ti ti-map-pin"></i> '+ev.lieu+'</span>':'')+
+          '</div>'+
+          (ev.desc?'<div style="font-size:11px;color:var(--text2);margin-top:4px">'+ev.desc+'</div>':'')+
+        '</div></div>';
+    }).join('');
+  }
+  renderList(avenir,'events-avenir',1);
+  renderList(passes,'events-passes',0.7);
+}
+
+function showEvDetail(id) {
+  var ev=events.find(function(e){return e.id===id;});
+  if(!ev)return;
+  currentEventId=id;
+  var months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  var d=ev.date?new Date(ev.date):null;
+  var dateStr=d?(d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear()):'Date non définie';
+  var typeTexts={match:'Match',evenement:'Événement',tournoi:'Tournoi',ag:'Assemblée générale'};
+  document.getElementById('ev-detail-content').innerHTML=
+    '<div style="margin-bottom:16px">'+
+    '<div style="font-size:11px;color:var(--gold);font-weight:600;text-transform:uppercase;margin-bottom:6px">'+typeTexts[ev.type]+'</div>'+
+    '<div style="font-size:20px;font-weight:600;margin-bottom:12px">'+ev.titre+'</div>'+
+    (ev.date?'<div style="font-size:13px;color:var(--text2);margin-bottom:6px"><i class="ti ti-calendar" style="margin-right:6px"></i>'+dateStr+'</div>':'')+
+    (ev.heure?'<div style="font-size:13px;color:var(--text2);margin-bottom:6px"><i class="ti ti-clock" style="margin-right:6px"></i>'+ev.heure+'</div>':'')+
+    (ev.lieu?'<div style="font-size:13px;color:var(--text2);margin-bottom:6px"><i class="ti ti-map-pin" style="margin-right:6px"></i>'+ev.lieu+'</div>':'')+
+    (ev.desc?'<div style="font-size:13px;color:var(--text2);margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">'+ev.desc+'</div>':'')+
+    '</div>';
+  document.getElementById('ev-delete-btn').style.display=isAdmin?'flex':'none';
+  openModal('modal-ev-detail');
+}
+
+function deleteEvent() {
+  if (!currentEventId) return;
+  events=events.filter(function(e){return e.id!==currentEventId;});
+  currentEventId=null;
+  closeModal('modal-ev-detail');
+  renderEvents();
+  renderCalendar();
+  showToast('Événement supprimé');
+}
+
+function filterEvents(type, btn) {
+  document.querySelectorAll('.fbtn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.ev-card').forEach(function(c){
+    c.style.display=(type==='tous'||c.getAttribute('data-type')===type)?'flex':'none';
+  });
+}
+
+// ===== TÂCHES =====
+function addTask() {
+  var nom=document.getElementById('t-nom').value.trim();
+  if(!nom){showToast('Remplis le nom de la tâche');return;}
+  var urgLabels={'um':'Normal','uh':'Urgent','ul':'Faible'};
+  var t={id:'t'+Date.now(),nom:nom,qui:document.getElementById('t-qui').value,ev:document.getElementById('t-ev').value,urg:document.getElementById('t-urg').value,done:false};
+  tasks.push(t);
+  closeModal('modal-tache');
+  document.getElementById('t-nom').value='';
+  document.getElementById('t-ev').value='';
+  renderTasks();
+  showToast('Tâche ajoutée ✓');
+}
+
+function renderTasks() {
+  var el=document.getElementById('tasks-list');
+  if(tasks.length===0){
+    el.innerHTML='<div class="empty" style="margin:20px 16px"><i class="ti ti-checks"></i><p>Aucune tâche.<br>Ajoute-en une via le bouton +</p></div>';
+    return;
+  }
+  var urgLabels={'um':'Normal','uh':'Urgent','ul':'Faible'};
+  el.innerHTML='<div class="card">'+tasks.map(function(t,i){
+    return '<div class="task-item '+(i<tasks.length-1?'row-sep':'')+'">'+
+      '<div class="task-check '+(t.done?'done':'')+'" onclick="toggleTask(\''+t.id+'\')">'+
+        (t.done?'<i class="ti ti-check" style="font-size:11px"></i>':'')+
+      '</div>'+
+      '<div style="flex:1">'+
+        '<div style="font-size:13px;font-weight:500'+(t.done?';text-decoration:line-through;color:var(--text2)':'')+'">'+t.nom+'</div>'+
+        '<div style="font-size:11px;color:var(--text2)">'+t.qui+(t.ev?' · '+t.ev:'')+'</div>'+
+      '</div>'+
+      '<span class="urg '+t.urg+'">'+urgLabels[t.urg]+'</span>'+
+    '</div>';
+  }).join('')+'</div>';
+}
+
+function toggleTask(id) {
+  var t=tasks.find(function(x){return x.id===id;});
+  if(t){t.done=!t.done;renderTasks();if(t.done)showToast('Tâche complétée ✓');}
+}
+
+// ===== MODALS =====
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function closeModalOverlay(e,id){if(e.target.classList.contains('mo'))closeModal(id);}
+
+// ===== TOAST =====
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2500);
+}
+</script>
+</body>
+</html>
